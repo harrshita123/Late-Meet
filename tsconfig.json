@@ -7,6 +7,7 @@
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "strict": true,
+    "strictNullChecks": true,
     "sourceMap": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -18,6 +19,6 @@
     "skipLibCheck": true,
     "types": ["chrome", "node"]
   },
-  "include": ["src/**/*.ts", "src/**/*.js", "src/manifest.json"],
+  "include": ["src/**/*.ts", "src/manifest.json"],
   "exclude": ["node_modules", "dist"]
 }

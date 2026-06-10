@@ -1,5 +1,8 @@
 /* Content Script Styles — Injected into Google Meet pages */
-/* Monochrome theme — matches popup/dashboard */
+/* Theme-agnostic design — matches popup/dashboard */
+
+/* --- THEME TOKENS --- */
+@import "./theme.css";
 
 /* ——— Floating Dashboard Button ——— */
 #mc-float-btn {
@@ -25,7 +28,12 @@
 #mc-float-btn:hover {
   transform: translateY(-2px) scale(1.05);
 }
-
+#mc-float-btn:focus-visible {
+  outline: 2px solid #8ec0fe;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3.5px #8ec0fe;
+  border-radius: 16px;
+}
 #mc-float-btn:hover .mc-float-label {
   opacity: 1;
   transform: translateX(0);
@@ -36,33 +44,40 @@
   width: 52px;
   height: 52px;
   border-radius: 16px;
-  background: #000000;
-  border: 1px solid #262626;
+  background: var(--bg-app);
+  border: 1px solid var(--border-sub);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px var(--shadow-main);
   transition: all 0.3s ease;
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 #mc-float-btn:hover .mc-float-btn-inner {
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.8), 0 0 60px rgba(255, 255, 255, 0.05);
-  border-color: #404040;
+  box-shadow: 0 6px 30px var(--shadow-main);
+  border-color: hsl(var(--accent-color));
 }
 
 .mc-float-pulse {
   position: absolute;
   inset: -3px;
   border-radius: 18px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid var(--border-element);
   opacity: 0.5;
   animation: mc-pulse 2s ease-in-out infinite;
 }
 
 @keyframes mc-pulse {
-  0%, 100% { transform: scale(1); opacity: 0.5; }
-  50% { transform: scale(1.15); opacity: 0; }
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0;
+  }
 }
 
 .mc-float-icon {
@@ -70,23 +85,24 @@
   font-size: 24px;
   z-index: 1;
   display: flex;
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 .mc-float-label {
-  background: rgba(0, 0, 0, 0.95);
+  background: var(--bg-app);
   backdrop-filter: blur(12px);
-  color: #FAFAFA;
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--text-main);
   font-size: 12px;
   font-weight: 600;
-  font-family: 'Inter', 'Segoe UI', sans-serif;
+  font-family: Inter, "Segoe UI", sans-serif;
   padding: 6px 12px;
   border-radius: 8px;
   white-space: nowrap;
   opacity: 0;
   transform: translateX(8px);
   transition: all 0.3s ease;
-  border: 1px solid #262626;
+  border: 1px solid var(--border-sub);
 }
 
 /* ——— Private Brief Overlay ——— */
@@ -117,14 +133,19 @@
   width: 100%;
   max-height: calc(100vh - 48px);
   overflow-y: auto;
-  background: rgba(0, 0, 0, 0.97);
+  background: var(--bg-app);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-radius: 20px;
-  border: 1px solid #262626;
-  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--border-sub);
+  box-shadow: 0 25px 80px var(--shadow-main);
+  color: var(--text-main);
   padding: 24px;
-  font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif;
-  color: #FAFAFA;
+  font-family:
+    "Inter",
+    "Segoe UI",
+    -apple-system,
+    sans-serif;
 }
 
 .mc-brief-card::-webkit-scrollbar {
@@ -132,7 +153,7 @@
 }
 
 .mc-brief-card::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--border-element);
   border-radius: 4px;
 }
 
@@ -142,12 +163,12 @@
   gap: 10px;
   margin-bottom: 20px;
   padding-bottom: 16px;
-  border-bottom: 1px solid #171717;
+  border-bottom: 1px solid var(--border-main);
 }
 
 .mc-brief-icon {
   font-size: 24px;
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 .mc-brief-title {
@@ -156,13 +177,13 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 .mc-brief-close {
-  background: #171717;
-  border: 1px solid #262626;
-  color: #A3A3A3;
+  background: var(--bg-card);
+  border: 1px solid var(--border-sub);
+  color: var(--text-sub);
   width: 32px;
   height: 32px;
   border-radius: 10px;
@@ -175,30 +196,31 @@
 }
 
 .mc-brief-close:hover {
-  background: #262626;
-  border-color: #404040;
-  color: #FFFFFF;
+  background: var(--bg-element);
+  border-color: var(--border-element);
+  color: var(--text-main);
 }
 
 .mc-brief-greeting {
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 6px;
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 .mc-brief-text {
   font-size: 14px;
-  color: #A3A3A3;
+  color: var(--text-sub);
   margin-bottom: 20px;
+  white-space: pre-wrap;
 }
 
 .mc-brief-section {
   margin-bottom: 16px;
   padding: 14px;
-  background: #0A0A0A;
+  background: var(--bg-surface);
   border-radius: 12px;
-  border: 1px solid #171717;
+  border: 1px solid var(--border-main);
 }
 
 .mc-brief-label {
@@ -206,7 +228,7 @@
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  color: #FAFAFA;
+  color: var(--text-main);
   margin-bottom: 8px;
   display: flex;
   align-items: center;
@@ -222,34 +244,44 @@
   position: relative;
   padding: 6px 0 6px 18px;
   font-size: 13px;
-  color: #A3A3A3;
+  color: var(--text-sub);
   line-height: 1.5;
 }
 
 .mc-brief-list li::before {
-  content: '•';
+  content: "•";
   position: absolute;
   left: 0;
-  color: #FFFFFF;
+  color: var(--text-sub);
   font-weight: 700;
 }
 
 .mc-brief-current {
   font-size: 14px;
-  color: #FAFAFA;
+  color: var(--text-main);
   font-weight: 500;
   padding: 8px 12px;
-  background: #171717;
+  background: var(--bg-card);
   border-radius: 8px;
-  border-left: 3px solid #FFFFFF;
+  border-left: 3px solid hsl(var(--accent-color));
 }
 
 .mc-brief-footer {
   text-align: center;
   font-size: 11px;
-  color: #525252;
+  color: var(--text-muted);
   margin-top: 16px;
   padding-top: 12px;
-  border-top: 1px solid #171717;
+  border-top: 1px solid var(--border-main);
   font-style: italic;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [id^="mc-"],
+  [id^="mc-"]::before,
+  [id^="mc-"]::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -1,14 +1,47 @@
 /* Options Page Styles — AI Meeting Copilot */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+/* --- THEME TOKENS --- */
+@import "./theme.css";
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* --- Status & Feedback Utilities --- */
+.passphrase-status {
+  font-size: 12px;
+  margin: 4px 0 12px;
+  text-align: left;
+}
+
+.status-success {
+  color: var(--text-success);
+}
+
+.status-danger {
+  color: var(--text-danger);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Prevent transition flicker on initial load */
+.no-transitions,
+.no-transitions * {
+  transition: none !important;
+}
 
 body {
-  font-family: 'Inter', -apple-system, 'Segoe UI', sans-serif;
-  background: #000000;
-  color: #FFFFFF;
+  font-family:
+    "Inter",
+    -apple-system,
+    "Segoe UI",
+    sans-serif;
+  background: var(--bg-app);
+  color: var(--text-main);
   min-height: 100vh;
+  transition:
+    background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .options-container {
@@ -31,18 +64,18 @@ body {
   justify-content: center;
   width: 48px;
   height: 48px;
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 .options-title {
   font-size: 24px;
   font-weight: 800;
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 .options-subtitle {
   font-size: 13px;
-  color: #737373;
+  color: var(--text-muted);
   margin-top: 2px;
 }
 
@@ -50,11 +83,23 @@ body {
 .options-section {
   margin-bottom: 32px;
   padding: 24px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-main);
   border-radius: 12px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  transition:
+    background-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.3s cubic-bezier(0.25, 1, 0.5, 1),
+    box-shadow 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.options-section:hover {
+  background: var(--bg-card);
+  border-color: var(--border-element);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
 }
 
 .section-title {
@@ -64,11 +109,11 @@ body {
   font-size: 16px;
   font-weight: 700;
   margin-bottom: 20px;
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 .section-title svg {
-  color: #A3A3A3;
+  color: var(--text-sub);
 }
 
 /* Form Groups */
@@ -76,96 +121,91 @@ body {
   margin-bottom: 20px;
 }
 
-.form-group:last-child { margin-bottom: 0; }
+.form-group:last-child {
+  margin-bottom: 0;
+}
 
 .form-label {
   display: block;
   font-size: 13px;
   font-weight: 600;
-  color: #FFFFFF;
+  color: var(--text-main);
   margin-bottom: 4px;
 }
 
-.required { color: #A3A3A3; font-weight: 400; }
+.required {
+  color: var(--text-sub);
+  font-weight: 400;
+}
 
 .form-hint {
   font-size: 12px;
-  color: #737373;
+  color: var(--text-muted);
   margin-bottom: 8px;
 }
 
-.form-input {
+/* Inputs & Interactive Items */
+.form-input,
+.form-select,
+.toggle-vis {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: var(--bg-card);
+  border: 1px solid var(--border-sub);
   border-radius: 8px;
-  color: #FFFFFF;
+  color: var(--text-main);
   font-family: inherit;
   font-size: 13px;
   outline: none;
   transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.form-input:focus {
-  border-color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.1);
+.form-input:focus,
+.form-select:focus {
+  border-color: hsl(var(--accent-color));
+  background: var(--bg-element);
 }
 
-.form-input::placeholder { color: #525252; }
+.form-input::placeholder {
+  color: var(--text-muted);
+}
 
 .input-row {
   display: flex;
   gap: 8px;
 }
 
-.input-row .form-input { flex: 1; }
+.input-row .form-input {
+  flex: 1;
+}
 
 .toggle-vis {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 44px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  color: #A3A3A3;
+  color: var(--text-sub);
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .toggle-vis:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: #FFFFFF;
+  background: var(--bg-element);
+  color: var(--text-main);
 }
 
-/* Select */
+/* Select Specifics */
 .form-select {
-  width: 100%;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  color: #FFFFFF;
-  font-family: inherit;
-  font-size: 13px;
-  outline: none;
   cursor: pointer;
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='%23FFFFFF'/%3E%3C/svg%3E");
+  /* Using currentColor so the arrow matches whatever the text color is natively! */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M6 8L1 3h10z' fill='currentColor'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 16px center;
-  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.form-select:focus {
-  border-color: #FFFFFF;
-  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .form-select option {
-  background: #0A0A0A;
-  color: #FFFFFF;
+  background: var(--bg-surface);
+  color: var(--text-main);
 }
 
 /* Range Slider */
@@ -179,7 +219,7 @@ body {
   flex: 1;
   height: 4px;
   appearance: none;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--border-sub);
   border-radius: 2px;
   outline: none;
 }
@@ -189,21 +229,21 @@ body {
   width: 16px;
   height: 16px;
   border-radius: 50%;
-  background: #FFFFFF;
+  background: hsl(var(--accent-color));
   cursor: pointer;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 0 4px var(--border-main);
   transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .form-range::-webkit-slider-thumb:hover {
   transform: scale(1.2);
-  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 0 6px var(--border-sub);
 }
 
 .range-value {
   font-size: 13px;
   font-weight: 600;
-  color: #FFFFFF;
+  color: var(--text-main);
   min-width: 32px;
   text-align: right;
   font-variant-numeric: tabular-nums;
@@ -221,20 +261,22 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 14px 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid var(--border-main);
 }
 
-.toggle-item:last-child { border-bottom: none; }
+.toggle-item:last-child {
+  border-bottom: none;
+}
 
 .toggle-label {
   font-size: 13px;
   font-weight: 600;
-  color: #FFFFFF;
+  color: var(--text-main);
 }
 
 .toggle-hint {
   font-size: 12px;
-  color: #737373;
+  color: var(--text-muted);
   margin-top: 2px;
 }
 
@@ -246,36 +288,40 @@ body {
   flex-shrink: 0;
 }
 
-.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
 .toggle-slider {
   position: absolute;
   cursor: pointer;
   inset: 0;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--border-element);
   border-radius: 24px;
   transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .toggle-slider::before {
-  content: '';
+  content: "";
   position: absolute;
   height: 18px;
   width: 18px;
   left: 3px;
   bottom: 3px;
-  background: #A3A3A3;
+  background: var(--bg-app);
   border-radius: 50%;
   transition: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .toggle-switch input:checked + .toggle-slider {
-  background: #FFFFFF;
+  background: hsl(var(--accent-color));
 }
 
 .toggle-switch input:checked + .toggle-slider::before {
   transform: translateX(20px);
-  background: #000000;
+  background: var(--text-invert);
 }
 
 /* Save Button */
@@ -291,8 +337,8 @@ body {
   gap: 8px;
   width: 100%;
   padding: 14px;
-  background: #FFFFFF;
-  color: #000000;
+  background: hsl(var(--accent-color));
+  color: var(--text-invert);
   border: none;
   border-radius: 8px;
   font-family: inherit;
@@ -303,7 +349,7 @@ body {
 }
 
 .save-btn:hover {
-  background: #E5E5E5;
+  filter: brightness(0.9);
   transform: scale(0.99);
 }
 
@@ -312,24 +358,53 @@ body {
 }
 
 .save-btn svg {
-  color: #000000;
+  color: var(--text-invert);
 }
 
 .save-status {
   margin-top: 12px;
   font-size: 13px;
-  color: #A3A3A3;
+  color: var(--text-sub);
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
-.save-status.visible { opacity: 1; }
+.save-status.visible {
+  opacity: 1;
+}
 
 /* Footer */
 .options-footer {
   margin-top: 40px;
   text-align: center;
   font-size: 12px;
-  color: #525252;
+  color: var(--text-muted);
 }
 
+/* Color Circle Grid Picker Styles */
+.accent-picker-grid {
+  display: flex;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.color-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.color-dot:hover {
+  transform: scale(1.15);
+}
+
+/* Draw a clear white/dark focus border frame ring around the chosen color ring bubble option */
+.color-dot.active {
+  box-shadow:
+    0 0 0 2px var(--bg-app),
+    0 0 0 4px hsl(var(--accent-color));
+  transform: scale(1.05);
+}

@@ -1,0 +1,59 @@
+name: CI Failure Advisor
+
+on:
+  workflow_run:
+    workflows: ["Late-Meet Build Validation", "Lint & Format Check"]
+    types: [completed]
+
+permissions:
+  pull-requests: write
+  issues: write
+
+jobs:
+  advise:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - name: Post Failure Guidance
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const run = context.payload.workflow_run;
+
+            if (!run.pull_requests || run.pull_requests.length === 0) {
+              console.log("No linked pull requests found for this run.");
+              return;
+            }
+
+            const prNumber = run.pull_requests[0].number;
+            const workflowName = run.name;
+
+            const STAR_REMINDER = "\n\n---\n\n*Please consider starring the repository ⭐ to show your support!*";
+
+            let guidance = `### ⚠️ CI Check Failed: **${workflowName}**\n\n` +
+              `Hello @${run.triggering_actor ? run.triggering_actor.login : run.actor.login}! It looks like the automated build or code quality checks failed for your PR.\n\n`;
+
+            if (workflowName.includes("Lint & Format")) {
+              guidance += `This typically happens due to styling or code style issues. Please try running the following commands locally in your workspace to clean up the code and verify types:\n` +
+                `1. Run \`npm run format\` to automatically fix code styling.\n` +
+                `2. Run \`npm run lint\` to check for any ESLint syntax issues.\n` +
+                `3. Run \`npm run type-check\` to verify TypeScript compilation.\n\n` +
+                `Once fixed, commit and push your changes back to update the PR!`;
+            } else {
+              guidance += `This typically happens when tests fail or the project fails to build. Please verify locally by running:\n` +
+                `- \`npm test\` to execute the unit tests.\n` +
+                `- \`npm run build\` to verify that bundling works properly.\n\n` +
+                `Check the action log details above, correct the errors, and push the updates.`;
+            }
+
+            guidance += STAR_REMINDER;
+
+            await github.rest.issues.createComment({
+              owner,
+              repo,
+              issue_number: prNumber,
+              body: guidance
+            });
